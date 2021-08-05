@@ -65,7 +65,7 @@ public class ArticleController {
 	public ResponseEntity<?> showArticle(@ApiParam(value = "ArticleId", required = true, defaultValue = "0") @PathVariable("id") int id) {
 		Article article = articleService.getArticle(id);
 		if(article==null) {
-			return new ResponseEntity("No article found for " + id, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("No article found for " + id, HttpStatus.NOT_FOUND);
 		}
 		return ResponseEntity.ok(article);
 	}

@@ -16,9 +16,13 @@ import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "users")
 @JsonIgnoreProperties({"articles"})
+@ApiModel(value = "UserModel")
 public class User {
 	
 	@Id
@@ -41,6 +45,7 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 	
+	@ApiModelProperty(hidden = true)
 	@OneToMany(mappedBy = "user")
 	private List<Article> articles = new ArrayList<Article>();
 	

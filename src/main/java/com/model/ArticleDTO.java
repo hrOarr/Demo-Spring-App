@@ -5,24 +5,30 @@ import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "ArticleDTO", description = "Contains Article Details Fields")
 public class ArticleDTO {
+	@ApiModelProperty(name = "ArticleId")
 	private int id;
-
+	
+	@ApiModelProperty(name = "Title", required = true)
 	@NotEmpty(message = "Title can not be Empty")
 	@Size(min = 5, max = 55, message = "Title must be between 5 and 55 characters")
 	private String title;
-
+	
+	@ApiModelProperty(name = "Content", required = true)
 	@NotEmpty(message = "Body can not be Empty")
 	@Size(min = 15, message = "Body is too short")
 	private String body;
 
 	private String username;
 	
+	@ApiModelProperty(name = "User Id", required = true)
 	@Positive(message = "User is not selected")
 	private int user_id;
 	
+	@ApiModelProperty(name = "Tag list", required = true)
 	@NotEmpty(message = "Tags need to be included")
 	private String tags;
 

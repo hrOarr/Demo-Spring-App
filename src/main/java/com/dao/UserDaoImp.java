@@ -44,8 +44,11 @@ public class UserDaoImp implements UserDao {
 		Query query = session.createQuery("FROM User WHERE email=:email");
 		query.setParameter("email", email);
 		query.setMaxResults(1);
-		User user = (User)query.getSingleResult();
-		return user;
+		List<User> users = query.getResultList();
+		if(users.isEmpty()||users==null) {
+			return null;
+		}
+		return users.get(0);
 	}
 
 	@SuppressWarnings("unchecked")
