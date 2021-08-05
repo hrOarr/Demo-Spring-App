@@ -31,7 +31,7 @@ public class AuthController {
 	
 	@ApiOperation(value = "Login API")
 	@PostMapping("/login")
-	public ResponseEntity<?> submitLogin(@Valid @RequestBody User user, BindingResult result) {
+	public ResponseEntity<?> userLogin(@Valid @RequestBody User user, BindingResult result) {
 		
 		if(result.hasFieldErrors("email")||result.hasFieldErrors("password")) {
 			List<String> errors = result.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
@@ -54,7 +54,7 @@ public class AuthController {
 	
 	@ApiOperation(value = "Register API")
 	@PostMapping("/register")
-	public ResponseEntity<?> submitRegister(@Valid @RequestBody User user, BindingResult result) {
+	public ResponseEntity<?> userRegister(@Valid @RequestBody User user, BindingResult result) {
 		if(result.hasErrors()) {
 			List<String> errors = result.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
