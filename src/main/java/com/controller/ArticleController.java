@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,8 +24,15 @@ import com.model.Article;
 import com.model.ArticleDTO;
 import com.service.ArticleService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("/api/v1/articles")
+@Api(value = "ArticlesRestAPI")
 public class ArticleController {
 	
 	private ArticleService articleService;
@@ -35,15 +43,26 @@ public class ArticleController {
 	}
 	
 	// get all articles
-	@GetMapping()
+	@ApiOperation(value = "Get List of Articles", response = Iterable.class, notes = "List of Articles")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successful retrieval"),
+			@ApiResponse(code = 500, message = "Internal Server Error")
+	})
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Article>> allArticles() {
 		List<Article> articles = articleService.getArticleList();
 		return ResponseEntity.ok(articles);
 	}
 	
 	// get single article
+	@ApiOperation(value = "Get Specific Article")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successful retrieval"),
+			@ApiResponse(code = 404, message = "Resource Not Found"),
+			@ApiResponse(code = 500, message = "Internal Server Error")
+	})
 	@GetMapping("/{id}")
-	public ResponseEntity<?> showArticle(@PathVariable("id") int id) {
+	public ResponseEntity<?> showArticle(@ApiParam(value = "ArticleId", required = true, defaultValue = "0") @PathVariable("id") int id) {
 		Article article = articleService.getArticle(id);
 		if(article==null) {
 			return new ResponseEntity("No article found for " + id, HttpStatus.NOT_FOUND);
@@ -52,7 +71,13 @@ public class ArticleController {
 	}
 	
 	// add article
-	@PostMapping("/add")
+	@ApiOperation(value = "Save New Article")
+	@ApiResponses(value = {
+			@ApiResponse(code = 201, message = "Resource Created"),
+			@ApiResponse(code = 400, message = "Bad Request"),
+			@ApiResponse(code = 500, message = "Internal Server Error")
+	})
+	@PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> addArticle(@Valid @RequestBody ArticleDTO articleDTO, BindingResult result) {
 		//HttpHeaders responseHeaders = new HttpHeaders();
 		System.out.println("hello there " + articleDTO);
@@ -65,7 +90,13 @@ public class ArticleController {
 	}
 	
 	// edit article
-	@PutMapping("/edit")
+	@ApiOperation(value = "Update specific Article")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Resource Updated"),
+			@ApiResponse(code = 400, message = "Bad Request"),
+			@ApiResponse(code = 500, message = "Internal Server Error")
+	})
+	@PutMapping(value = "/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> editArticle(@Valid @RequestBody ArticleDTO articleDTO, BindingResult result) {
 		//HttpHeaders responseHeaders = new HttpHeaders();
 		System.out.println("update " + articleDTO);
@@ -78,13 +109,23 @@ public class ArticleController {
 	}
 	
 	// get articles by tag
-	@GetMapping("/byTag")
+	@ApiOperation(value = "Get Articles filtering by Tag")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successful retrieval"),
+			@ApiResponse(code = 500, message = "Internal Server Error")
+	})
+	@GetMapping(value = "/byTag", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getArticlesByTag(@RequestParam("tag") String name) {
 		List<Article> articles = articleService.getArticlesByTagName(name);
 		return ResponseEntity.ok(articles);
 	}
 	
 	// delete article
+	@ApiOperation(value = "Delete Specific Article")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successful deletion"),
+			@ApiResponse(code = 500, message = "Internal Server Error")
+	})
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> deleteArticle(@PathVariable("id") int id) {
 		articleService.deleteArticle(id);

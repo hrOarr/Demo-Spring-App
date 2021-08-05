@@ -4,6 +4,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(value = "ArticleDTO", description = "Contains Article Details Fields")
 public class ArticleDTO {
 	private int id;
 

@@ -18,9 +18,12 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.annotations.ApiModel;
+
 @Entity
 @Table(name = "articles")
 @JsonIgnoreProperties(ignoreUnknown = true)
+@ApiModel(value = "ArticleModel")
 public class Article {
 	
 	@Id
