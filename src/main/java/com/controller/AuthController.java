@@ -1,5 +1,6 @@
 package com.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,10 +40,14 @@ public class AuthController {
 		// check user password
 		User obj = userService.getUserByEmail(user.getEmail());
 		if(obj==null) {
-			return ResponseEntity.badRequest().body("Email is incorrect!");
+			List<String> errors = new ArrayList<String>();
+			errors.add("Email is incorrect!");
+			return ResponseEntity.badRequest().body(errors);
 		}
 		else if(!obj.getPassword().equals(user.getPassword())) {
-			return ResponseEntity.badRequest().body("Password is incorrect!");
+			List<String> errors = new ArrayList<String>();
+			errors.add("Password is incorrect!");
+			return ResponseEntity.badRequest().body(errors);
 		}
 		return ResponseEntity.ok(obj);
 	}
@@ -57,7 +62,9 @@ public class AuthController {
 		// check if already exist or not
 		User obj = userService.getUserByEmail(user.getEmail());
 		if(obj!=null) {
-			return ResponseEntity.badRequest().body("Email is already in use!");
+			List<String> errors = new ArrayList<String>();
+			errors.add("Email is already in use!");
+			return ResponseEntity.badRequest().body(errors);
 		}
 		userService.saveUser(user);
 		return ResponseEntity.ok(userService.getUserByEmail(user.getEmail()));
