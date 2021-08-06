@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,6 +36,7 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "ArticlesRestAPI")
 public class ArticleController {
 	
+	private static final Logger logger = Logger.getLogger(ArticleController.class);
 	private ArticleService articleService;
 	
 	@Autowired
@@ -80,7 +82,7 @@ public class ArticleController {
 	@PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> addArticle(@Valid @RequestBody ArticleDTO articleDTO, BindingResult result) {
 		//HttpHeaders responseHeaders = new HttpHeaders();
-		System.out.println("hello there " + articleDTO);
+		logger.debug("method[addArticle] = " + articleDTO);
 		if(result.hasErrors()) {
 			List<String> errors = result.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
@@ -99,7 +101,7 @@ public class ArticleController {
 	@PutMapping(value = "/edit", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> editArticle(@Valid @RequestBody ArticleDTO articleDTO, BindingResult result) {
 		//HttpHeaders responseHeaders = new HttpHeaders();
-		System.out.println("update " + articleDTO);
+		logger.debug("method[editArticle] = " + articleDTO);
 		if(result.hasErrors()) {
 			List<String> errors = result.getAllErrors().stream().map(e -> e.getDefaultMessage()).collect(Collectors.toList());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
