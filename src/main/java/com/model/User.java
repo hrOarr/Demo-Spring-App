@@ -10,9 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -30,18 +27,12 @@ public class User {
 	@Column(name = "id")
 	private int id;
 	
-	@NotEmpty(message = "Name can not be Empty")
-	@Size(min = 5, max = 55, message = "Name must be between 5 and 55 characters")
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@NotEmpty(message = "Email can not be Empty")
-	@Email(message = "Invalid Email")
 	@Column(name = "email", nullable = false)
 	private String email;
 	
-	@NotEmpty(message = "Password can not be Empty")
-	@Size(min = 5, max = 55, message = "Password must be between 5 and 55 characters")
 	@Column(name = "password", nullable = false)
 	private String password;
 	
