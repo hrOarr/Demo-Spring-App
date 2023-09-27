@@ -1,7 +1,5 @@
-# Rest-API with Spring-MVC and Hibernate-JPA
-
-## technologies
--> spring-mvc
--> hibernate-jpa
--> jackson-databind
--> hibernate-validator
+# Spring DEMO APP (Java 7)
+## Dependencies
+- Spring version (4.0.2)
+- swagger-jersey-jaxrs_2.10
+- 
