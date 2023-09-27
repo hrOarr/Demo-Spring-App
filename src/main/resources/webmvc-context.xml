@@ -4,23 +4,16 @@
     xmlns:p="http://www.springframework.org/schema/p"
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:mvc="http://www.springframework.org/schema/mvc"
-    xmlns:tx="http://www.springframework.org/schema/tx"
     xsi:schemaLocation="http://www.springframework.org/schema/beans 
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/context 
                            http://www.springframework.org/schema/context/spring-context.xsd
                            http://www.springframework.org/schema/mvc
                            http://www.springframework.org/schema/mvc/spring-mvc.xsd
-                           http://www.springframework.org/schema/tx 
-                           http://www.springframework.org/schema/tx/spring-tx.xsd">
+                           ">
 
     <context:component-scan base-package="com.controller"/>
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler />
-    <bean class="springfox.documentation.swagger2.configuration.Swagger2DocumentationConfiguration">
-    </bean>
-<!--    <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>-->
-<!--    <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>-->
-    
-    <!-- Enable configuration of transactional behavior based on annotations -->
+
 </beans>
